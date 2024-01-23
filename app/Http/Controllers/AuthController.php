@@ -30,15 +30,15 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
-                'message' => "Failed to login",
-                "errors" => $validator->errors()
+                'message' => 'Failed to login',
+                'errors' => $validator->errors()
             ], 400);
         }
 
         if (!$this->authService->attempt($request->email, $request->password)) {
             return response()->json([
                 'status' => 401,
-                'message' => "Invalid credentials"
+                'message' => 'Invalid credentials'
             ], 401);
         }
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => "Successfully login",
+            'message' => 'Successfully login',
             'token' => $token
         ]);
     }
@@ -75,7 +75,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => "Successfully register",
+            'message' => 'Successfully register',
             'token' => $token
         ]);
     }

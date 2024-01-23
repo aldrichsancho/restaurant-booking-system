@@ -12,4 +12,9 @@ class UserService
         $data['password'] = Hash::make($data['password']);
         return User::create($data);
     }
+
+    public function findUserById(string $id): ?User
+    {
+        return User::find($id);
+    }
 }
