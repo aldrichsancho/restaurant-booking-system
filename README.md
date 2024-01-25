@@ -80,3 +80,10 @@ php artisan serve
 4. **Cancel Booking**: Cancel a booking using API.
 
 For the complete API Documentation can be accessed in this link: [API Documentation](https://documenter.getpostman.com/view/2470070/2s9YypE3US)
+
+## Assumptions and Challenges
+1. Using UUID because it can support global uniqueness effectively.
+2. Using Sanctum because it is commonly used in API authentication.
+3. Including customer information in the booking table as it allows for offline bookings (to be input by the admin).
+4. Including the restaurant field in the booking as it will be beneficial for aggregation in reporting.
+5. I face challenges in creating the optimal business flow due to the limitations of the information I have received. So I tried the best that I can
