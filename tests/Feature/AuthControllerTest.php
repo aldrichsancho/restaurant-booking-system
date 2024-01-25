@@ -31,7 +31,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['name']);
+        $response->assertStatus(400)->assertJsonValidationErrors(['name']);
 
         // Missing 'email' field
         $response = $this->postJson('/api/register', [
@@ -39,7 +39,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['email']);
+        $response->assertStatus(400)->assertJsonValidationErrors(['email']);
 
         // Missing 'password' field
         $response = $this->postJson('/api/register', [
@@ -47,7 +47,7 @@ class AuthControllerTest extends TestCase
             'email' => $this->faker->unique()->safeEmail,
         ]);
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['password']);
+        $response->assertStatus(400)->assertJsonValidationErrors(['password']);
     }
 
     public function test_user_registration_requires_unique_email()
@@ -60,7 +60,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['email']);
+        $response->assertStatus(400)->assertJsonValidationErrors(['email']);
     }
 
     public function test_user_can_login()

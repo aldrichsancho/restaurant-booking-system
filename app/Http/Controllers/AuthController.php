@@ -28,31 +28,20 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Failed to login',
-                'errors' => $validator->errors()
-            ], 400);
+            return commonResponse(400, 'Failed to register', ['errors' => $validator->errors()]);
         }
 
         if (!$this->authService->attempt($request->email, $request->password)) {
-            return response()->json([
-                'status' => 401,
-                'message' => 'Invalid credentials'
-            ], 401);
+            return commonResponse(401, 'Invalid credentials');
         }
 
         $user = Auth::user();
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully login',
-            'token' => $token
-        ]);
+        return commonResponse(200, 'Successfully login', compact('token'));
     }
 
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -61,11 +50,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Failed to register',
-                'errors' => $validator->errors()
-            ], 422);
+            return commonResponse(400, 'Failed to register', ['errors' => $validator->errors()]);
         }
 
         $user = $this->userService->createUser($request->all());
@@ -73,20 +58,12 @@ class AuthController extends Controller
         // Log in the newly registered user
         $token = $this->authService->attempt($request->email, $request->password);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully register',
-            'token' => $token
-        ]);
+        return commonResponse(200, 'Successfully register', compact('token'));
     }
 
     public function logout(Request $request): JsonResponse
     {
         $request->user()->tokens()->delete();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully logged out'
-        ]);
+        return commonResponse(200, 'Successfully logged out');
     }
 }
