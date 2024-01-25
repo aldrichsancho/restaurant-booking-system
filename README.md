@@ -60,12 +60,18 @@ The Booking table manages reservations made by users. It links users to specific
 ## Installation
 1. Clone the repository
 2. Install Dependencies: <br/>
-```composer install```
+```bash 
+composer install
+```
 3. Create a copy of the .env.example file and rename it to .env. Configure your database connection and other settings in this file.
 4. Run migrations and seed the database: <br/>
-```php artisan migrate --seed```
+```bash 
+php artisan migrate --seed
+```
 5. Start the development server: <br/>
-```php artisan serve```
+```bash
+php artisan serve
+```
 
 ## Usage
 1. **Register/Login**: Users need to register or log in to make a booking.
