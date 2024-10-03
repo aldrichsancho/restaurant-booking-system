@@ -37,8 +37,9 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $token = $user->createToken('api')->plainTextToken;
+        $role = $user->role;
 
-        return commonResponse(200, 'Successfully login', compact('token'));
+        return commonResponse(200, 'Successfully login', compact('token', 'role'));
     }
 
     public function register(Request $request): JsonResponse
@@ -46,7 +47,9 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'role' => 'required|string',
             'password' => 'required|min:6',
+            // 'confirm_password' => 'required|same:password'
         ]);
 
         if ($validator->fails()) {

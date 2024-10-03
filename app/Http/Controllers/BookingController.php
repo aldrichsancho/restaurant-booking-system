@@ -19,9 +19,18 @@ class BookingController extends Controller
         $this->bookingService = $bookingService;
     }
 
-    public function index(Request $request): BookingCollection
+    public function index(Request $request): BookingCollection | JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'role' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return commonResponse(400, 'Failed to fetch', ['errors' => $validator->errors()]);
+        }
+
         $data = $this->bookingService->getAllBookings(
+            $request->get('role'),
             $request->get('per_page') ?? 10,
             $request->get('page_number') ?? 1
         );
